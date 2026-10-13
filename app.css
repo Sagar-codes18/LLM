@@ -1,0 +1,318 @@
+/* app.css — styles for get-started.php only.
+ * Load after auth.css: it reuses auth.css tokens, fonts, background,
+ * .shell, .brand, .card, .field, .input-wrap, .hint, .error and .btn.
+ */
+
+/* ---------- New tokens (success message) ---------- */
+:root {
+  --ok: #146c43;
+  --ok-bg: #e6f4ec;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ok: #7ddba4;
+    --ok-bg: #12301f;
+  }
+}
+
+/* ---------- Wider shell ---------- */
+@media (min-width: 481px) {
+  .shell--wide { max-width: 46rem; }
+}
+
+/* ---------- Top bar: brand + sign out ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 0 1.25rem .25rem;
+}
+.topbar .brand { margin: 0; }
+
+.signout {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 1.125rem;
+  color: #ffffff;
+  font-size: .9375rem;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 255, 255, .45);
+  border-radius: 999px;
+}
+.signout:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, .14);
+  border-color: #ffffff;
+}
+/* The page background is always dark, so the ring must be light here */
+.signout:focus-visible { outline-color: #ffd166; }
+
+/* ---------- Heading block ---------- */
+.eyebrow {
+  margin: 0 0 .5rem;
+  color: var(--accent);
+  font-size: .875rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+/* ---------- Choice cards (the tabs) ---------- */
+.chooser {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: .875rem;
+  padding: 1.375rem 1.25rem;
+  color: var(--ink);
+  font-weight: 400;
+  text-decoration: none;
+  background: var(--field);
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  transition: border-color .15s, background-color .15s;
+}
+.choice:hover {
+  color: var(--ink);
+  border-color: var(--accent);
+}
+.choice.is-selected {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.choice__icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 3rem;
+  height: 3rem;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--grad-a), var(--grad-b));
+  border-radius: 14px;
+}
+.choice__icon svg { width: 1.5rem; height: 1.5rem; }
+
+.choice__text { display: block; }
+
+.choice__title {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+
+.choice__desc {
+  display: block;
+  margin-top: .25rem;
+  color: var(--muted);
+  font-size: .9375rem;
+}
+
+/* Check mark: a second, non-color cue for the selected card */
+.choice__check {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--accent);
+  opacity: 0;
+}
+.choice.is-selected .choice__check { opacity: 1; }
+
+/* Compact state: once a card is chosen, the cards shrink into a tab bar */
+.chooser--compact .choice {
+  flex-direction: row;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 3rem .75rem .875rem;
+}
+.chooser--compact .choice__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 12px;
+}
+.chooser--compact .choice__icon svg { width: 1.25rem; height: 1.25rem; }
+.chooser--compact .choice__title { font-size: 1.0625rem; }
+.chooser--compact .choice__desc { display: none; }
+.chooser--compact .choice__check {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ---------- Panels ---------- */
+.panel {
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid var(--accent-soft);
+}
+
+.panel__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: .25rem 1rem;
+  margin-bottom: .25rem;
+}
+
+.panel__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -.01em;
+}
+
+.panel__lede {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+
+.change {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+}
+
+/* ---------- Form layout ---------- */
+.form-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: 1.25rem;
+}
+
+@media (min-width: 40rem) {
+  .form-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .field--full { grid-column: 1 / -1; }
+}
+
+.optional {
+  color: var(--muted);
+  font-weight: 400;
+}
+
+/* ---------- Number, select, textarea, file: match the auth.css inputs ---------- */
+input[type="number"],
+select,
+textarea,
+.file-input {
+  display: block;
+  width: 100%;
+  min-height: 3.25rem;
+  padding: .625rem .875rem .625rem 2.85rem;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--field);
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  transition: box-shadow .15s, border-color .15s;
+}
+
+select {
+  padding-right: 2.75rem;
+  cursor: pointer;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+/* Empty required select reads like a placeholder */
+select:required:invalid { color: var(--muted); }
+select option {
+  color: var(--ink);
+  background: var(--card);
+}
+
+.select-wrap .chev {
+  position: absolute;
+  top: 50%;
+  right: .95rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+textarea {
+  min-height: 8rem;
+  padding: .75rem .875rem;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+.file-input {
+  padding: .6rem .75rem;
+  border-style: dashed;
+  line-height: 1.5;
+  cursor: pointer;
+}
+.file-input::file-selector-button {
+  margin-right: .875rem;
+  padding: .5rem .875rem;
+  font: inherit;
+  font-weight: 700;
+  color: var(--accent);
+  background: var(--card);
+  border: 2px solid var(--accent);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+input[type="number"][aria-invalid="true"],
+select[aria-invalid="true"],
+textarea[aria-invalid="true"],
+.file-input[aria-invalid="true"] { border-color: var(--error); }
+
+input[type="number"]:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+.file-input:focus-visible {
+  border-color: var(--focus);
+  box-shadow: 0 0 0 5px var(--ring);
+}
+
+/* ---------- Success message ---------- */
+.form-success {
+  margin: 0 0 1.25rem;
+  padding: .75rem .875rem;
+  color: var(--ok);
+  background: var(--ok-bg);
+  border-left: 4px solid var(--ok);
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 480px) {
+  .topbar { margin: 1.5rem 1.25rem 1.25rem; }
+  .chooser { grid-template-columns: minmax(0, 1fr); }
+  .choice { padding: 1.125rem 1rem; }
+  .panel__title { font-size: 1.375rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .choice { transition: none; }
+}
+
+@media (forced-colors: active) {
+  .choice,
+  .signout { border: 2px solid ButtonText; }
+  .choice.is-selected { border-color: Highlight; }
+  .form-success { border: 2px solid CanvasText; }
+  .choice__icon { border: 2px solid ButtonText; }
+}
